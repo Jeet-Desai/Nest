@@ -21,12 +21,12 @@ const SuggestedUser = (props) => {
         </VStack>
       </Flex>
       <Button
-        
         color={"blue.600"}
         _hover={{ color: "white" }}
         transition={"0.2s ease-in-out"}
         cursor={"pointer"}
         fontSize={14}
+        p={0}
         bg={"transparent"}
         onClick={() => {
           if (isFollowed) {

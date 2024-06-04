@@ -9,7 +9,7 @@ const SuggestedUsers = () => {
   return (
     <VStack px={2} gap={4}>
         <SuggestedHeader/>
-        <Flex mt={2} alignItems={"center"} justifyContent={"space-between"} w={"full"}>
+        <Flex  mt={2} alignItems={"center"} justifyContent={"space-between"} w={"full"}>
         <Text color={"rgb(168, 168, 168)"} fontSize={14}>Suggested for you</Text>
         <Text fontSize={14} _hover={{color:"rgb(168, 168, 168)"}} fontWeight={"600"} cursor={"pointer"}>See All</Text>
         </Flex>

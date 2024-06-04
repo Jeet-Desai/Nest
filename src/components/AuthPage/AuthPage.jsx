@@ -21,7 +21,7 @@ const AuthPage = () => {
           <VStack>
             {/* <Image h={150} src="/Nest-2.png" alt="Nest Logo" /> */}
             <Flex  direction={"column"} alignItems={"center"}>
-              <Image src="/Nest-2.png" h={"110px"}  mr={3.5}/>
+              <Image src="/Nest_New.png" h={"110px"}  mr={3.5}/>
                 <Text color={"#4d7f96"} fontSize={"25px"} letterSpacing={"10px"}>
                 NEST
                 </Text>

@@ -5,21 +5,21 @@ import ProfilePost from "./ProfilePost";
 
 
 const ProfilePosts = () => {
-  const [isLoading, Load] = useState(false);
+  const [isLoading, Load] = useState(true);
 
-//   useEffect(() => {
-//     setTimeout(() => {
-//       Load(false);
-//     }, 2000);
-//   }, []);
+  useEffect(() => {
+    setTimeout(() => {
+      Load(false);
+    }, 2000);
+  }, []);
   return (
     <Grid mt={5}
       templateColumns={"repeat(3,1fr)"}
       justifyContent={"center"}
       gap={1}
     >
-      {isLoading ? ([0, 1, 2, 3, 4, 5, 6, 7, 8].map(() => (
-        <Skeleton w={"full"} h={{base:170,md:300}}/>
+      {isLoading ? ([0, 1, 2, 3, 4, 5, 6, 7, 8].map((item,index) => (
+        <Skeleton key={index} w={"full"} h={{base:170,md:300}}/>
 
 ))) : (
     <>

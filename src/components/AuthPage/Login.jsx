@@ -1,24 +1,47 @@
-import React from 'react'
+import { Alert, AlertIcon, Button, Input } from "@chakra-ui/react";
+import React, { useState } from "react";
+import useSignUpWithEmailPassword from "../../hooks/useSignUpWithEmailPassword";
+import useLoginWithEmailPassword from "../../hooks/useLoginWithEmailPassword";
 
 const Login = () => {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+  });
+  const {login,loading,error} = useLoginWithEmailPassword();
+
   return (
     <>
-        <Input placeholder="Email" type="email" value={input.email} fontSize={17} onChange={(e)=>{
-                setInput({...input,email:e.target.value})
-            }}/>
-            <Input placeholder="Password" type="password" value={input.password} fontSize={17} onChange={(e)=>{
-                setInput({...input,password:e.target.value})}}/>
-            {!isLogin ? (
-              <Input placeholder="Confirm Password" type="password" value={input.cpassword} fontSize={17} onChange={(e)=>{
-                setInput({...input,cpassword:e.target.value})}}/>
-            ) : (
-              "null"
-            )}
-            <Button colorScheme="blue" w={"full"}>
-              {isLogin ? "Login" : "Sign Up"}
-            </Button>
+      <Input
+        size={"sm"}
+        placeholder="Email"
+        type="email"
+        value={input.email}
+        fontSize={17}
+        onChange={(e) => {
+          setInput({ ...input, email: e.target.value });
+        }}
+      />
+      <Input
+        size={"sm"}
+        placeholder="Password"
+        type="password"
+        value={input.password}
+        fontSize={17}
+        onChange={(e) => {
+          setInput({ ...input, password: e.target.value });
+        }}
+      />
+      {error && (
+        <Alert status="error" fontSize={13} p={2} borderRadius={4}>
+          <AlertIcon fontSize={12} />
+          {error.message}
+        </Alert>
+      )}
+      <Button isLoading={loading} colorScheme="blue" w={"full"} onClick={()=>login(input)}>
+        Log In
+      </Button>
     </>
-  )
-}
-
-export default Login
+  );
+};
+export default Login;

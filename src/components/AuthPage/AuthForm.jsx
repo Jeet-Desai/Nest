@@ -9,15 +9,14 @@ import {
   Image,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import GoogleAuth from "./GoogleAuth";
+import Login from "./Login";
+import SignUp from "./SignUp";
 
 const AuthForm = () => {
-  const [isLogin, setLogin] = useState(true);
-  const [input,setInput]= useState({
-    email:"",
-    password:"",
-    cpassword:""
-  });
-
+  const searchParams = new URLSearchParams(location.search);
+  const isLoginParam = searchParams.get("isLogin");
+  const [isLogin, setLogin] = useState(isLoginParam ? isLoginParam==="true" : true);
   return (
     <div>
       <VStack>
@@ -28,31 +27,8 @@ const AuthForm = () => {
           padding={5}
         >
           <VStack spacing={4}>
-            <Input placeholder="Email" type="email" value={input.email} fontSize={17} onChange={(e)=>{
-                setInput({...input,email:e.target.value})
-            }}/>
-            <Input placeholder="Password" type="password" value={input.password} fontSize={17} onChange={(e)=>{
-                setInput({...input,password:e.target.value})}}/>
-            {!isLogin ? (
-              <Input placeholder="Confirm Password" type="password" value={input.cpassword} fontSize={17} onChange={(e)=>{
-                setInput({...input,cpassword:e.target.value})}}/>
-            ) : (
-              "null"
-            )}
-            <Button colorScheme="blue" w={"full"}>
-              {isLogin ? "Login" : "Sign Up"}
-            </Button>
-
-            <Flex alignItems={"center"} justifyContent={"center"} w={"full"} gap={1} my={4}>
-                <Box flex={2} h={0.5} bg={"gray.400"} />
-                <Text mx={1}>OR</Text>
-                <Box flex={2} h={0.5} bg={"gray.400"} />
-            </Flex>
-
-            <Flex alignItems={"center"}>
-                <Image h={8} src="Google.png" />
-                <Text mx={1} cursor={"pointer"} color={"blue.500"}>Continue with Google</Text>
-            </Flex>
+            {isLogin ? <Login/> : <SignUp/>}
+            <GoogleAuth/>
           </VStack>
         </Box>
         <Flex>

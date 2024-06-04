@@ -3,6 +3,10 @@ import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { FaRegComment, FaV } from "react-icons/fa6";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../icons/icons";
+import {motion} from "framer-motion"
+import { useMotionValue, useVelocity } from "framer-motion"
+import LikeButton from "./LikeButton";
+
 
 const PostFooter = (props) => {
   const [isliked, togglelike] = useState(false);
@@ -36,9 +40,7 @@ const PostFooter = (props) => {
   return (
     <Box mb={5}>
       <Flex alignItems={"center"} gap={4} mt={4} pt={0}>
-        <Box cursor={"pointer"} fontSize={18} onClick={likeit}>
-          {isliked ? <UnlikeLogo /> : <NotificationsLogo />}
-        </Box>
+        <LikeButton isliked={isliked} likeit={likeit} />
         <Box cursor={"pointer"} fontSize={18} onClick={addcomment}>
           <CommentLogo />
         </Box>
@@ -51,7 +53,7 @@ const PostFooter = (props) => {
         </Text>
         ) :null}
         
-        <Text mt={2} color={"gray"}>View all 50 comments</Text>
+        <Text mt={2} color={"gray"} display={props.page=="profile" ? "none" : "block"}>View all 50 comments</Text>
         {/* <Flex justifyContent={"space-between"} alignItems={"center"}> */}
         {/* </Flex> */}
         {showComment || props.page=="profile" ? (
