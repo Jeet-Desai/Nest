@@ -7,7 +7,7 @@ import { set } from "firebase/database";
 import useAuthStore from "../store/useAuthStore";
 
 const useGoogleSignIn = () => {
-  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGoogle, , loading, error] = useSignInWithGoogle(auth);
   const showToast = useShowToast();
   const authLogin = useAuthStore((state) => state.loginUser);
   const signIn = async () => {
