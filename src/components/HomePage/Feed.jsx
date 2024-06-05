@@ -25,8 +25,8 @@ const Feed = () => {
           )
         ) : (
           <Box>
-          <Post username="chaitalidesai" image="img6.jpg" avatar="profile-pic-2.jpg" caption="Loving myself!"/>
           <Post username="jeetdesaimusic" image="profile-pic.png" avatar="profile-pic.png" caption="Bound by Beats ❤️"/>
+          <Post username="chaitalidesai" image="img6.jpg" avatar="profile-pic-2.jpg" caption="Loving myself!"/>
           <Post username="mehul_p_desai" image="profile-pic-3.jpg" avatar="profile-pic-3.jpg" caption="A much needed escape!"/>
           <Post username="jeetdesaimusic" image="img1.jpg" avatar="profile-pic.png" caption="Like father like son..."/>
           </Box>
