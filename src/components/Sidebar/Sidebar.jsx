@@ -21,8 +21,11 @@ import {motion} from "framer-motion"
 import { CgProfile } from "react-icons/cg";
 import { useSignOut } from "react-firebase-hooks/auth";
 import useLogout from "../../hooks/useLogout";
+import useAuthStore from "../../store/useAuthStore";
 
 const Sidebar = () => {
+  
+  const authUser = useAuthStore(state=>state.user);
   const sidebarItems = [
     {
       icon: <AiFillHome />,
@@ -50,7 +53,7 @@ const Sidebar = () => {
         />
       ),
       text: "Profile",
-      link: "/profile",
+      link: `/${authUser?.userName}`,
     },
     // {
     //   icon:<SlLogout />,
@@ -154,7 +157,6 @@ const Sidebar = () => {
                 _hover={{ bg: "whiteAlpha.400" }}
                 mt={{md:"auto"}}
                 onClick={signOutUser}
-                isLoading={isLoggingOut}
                 cursor={"pointer"}
               >
                 <Flex alignItems={"center"} justifyContent={"center"} w={10} h={10} display={{base:"flex",md:"none"}}>

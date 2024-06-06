@@ -1,7 +1,7 @@
 import { Avatar, AvatarGroup, Button, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({userProfile}) => {
   return (
     <Flex
       alignItems={{ base: "flex-start" }}
@@ -13,7 +13,7 @@ const ProfileHeader = () => {
       borderColor={"#4d7f96"}
     >
       <AvatarGroup size={{ base: "xl", bp830: "2xl" }} alignSelf={"flex-start"}>
-        <Avatar src={"profile-pic.png"} alt={"jeetdesaimusic"} />
+        <Avatar src={userProfile.profilePicURL} alt={"Avatar"} />
       </AvatarGroup>
 
       <Flex
@@ -21,8 +21,8 @@ const ProfileHeader = () => {
         pl={{ base: 0, bp830: 20 }}
         alignItems={"flex-start"}
       >
-        <Flex w="full" justifyContent={"space-between"} alignItems={"center"}>
-          <Text fontSize={18} fontWeight={600}>jeetdesaimusic</Text>
+        <Flex w="full" gap={5} justifyContent={"space-between"} alignItems={"center"}>
+          <Text fontSize={18} fontWeight={600}>{userProfile.userName}</Text>
           <Button
             _hover={{ bg: "#383838", color: "white" }}
             bg={"#545454"}
@@ -35,26 +35,24 @@ const ProfileHeader = () => {
         </Flex>
         <Text mt={4} fontSize={16}>
           <Text as={"span"} fontWeight={"bold"} mr={1}>
-            80
+            {userProfile.posts.length}
           </Text>
           Posts
-          <Text as={"span"} fontWeight={"bold"} ml={2} mr={1}>
-            100k
+          <Text as={"span"} fontWeight={"bold"} ml={5} mr={1}>
+          {userProfile.followers.length}
           </Text>
           Followers
-          <Text as={"span"} fontWeight={"bold"} ml={2} mr={1}>
-            1231
+          <Text as={"span"} fontWeight={"bold"} ml={5} mr={1}>
+          {userProfile.following.length}
           </Text>
           Following
         </Text>
         <Flex mt={3} direction={"column"}>
           <Text fontSize={15} fontWeight={600}>
-            Jeet Desai
+            {userProfile.fullName}
           </Text>
           <Text mt={0} fontSize={15}>
-            DAIICT'26
-            <br />
-            Life is incomplete without music!
+            {userProfile.bio}
           </Text>
         </Flex>
       </Flex>
