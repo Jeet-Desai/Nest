@@ -18,7 +18,6 @@ const useGetUserProfilebyUsername = (username) => {
 
             if(querySnap.empty)
             {
-                alert("NO")
                 return setUserProfile(null);
             }
             let userDoc;
