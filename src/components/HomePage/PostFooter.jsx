@@ -38,7 +38,7 @@ const PostFooter = (props) => {
       }
   }
   return (
-    <Box mb={5}>
+    <Box mb={5} px={2}>
       <Flex alignItems={"center"} gap={4} mt={4} pt={0}>
         <LikeButton isliked={isliked} likeit={likeit} />
         <Box cursor={"pointer"} fontSize={18} onClick={addcomment}>

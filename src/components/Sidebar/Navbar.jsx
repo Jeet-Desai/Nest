@@ -24,7 +24,9 @@ const Navbar = () => {
       zIndex={10}
       top={0}
       maxW={"container.lg"}
-      my={1}
+      py={1}
+      borderBottom={"1px solid"}
+      borderColor={"#4d7f96"}
     >
       <Flex
         justifyContent={"space-between"}
@@ -104,7 +106,7 @@ const Navbar = () => {
           </Link>
         </Flex>
       </Flex>
-      <Divider borderColor={"#4d7f96"} />
+      {/* <Divider borderColor={"#4d7f96"} /> */}
     </Container>
   );
 };

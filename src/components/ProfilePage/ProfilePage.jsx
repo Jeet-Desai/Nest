@@ -13,10 +13,9 @@ const ProfilePage = () => {
   const canRenderSidebar = pathname !== "/auth" && user;
   const canRenderNavbar = pathname !== "/auth" && !user;
   return (
-    <Container maxW={"container.lg"} py={canRenderNavbar ? {base:2,md:5} : 10}>
-      <Flex direction={"column"} maxW="full" gap={8}>
+    <Container  maxW={"container.lg"} h={"100vh"} py={canRenderNavbar ? {base:2,md:5} : 10} px={0}>
+      <Flex direction={"column"} w={"full"} gap={8}>
         <ProfileHeader />
-        <Divider borderColor={"#4d7f96"} />
         <Flex
           direction={"column"}
           w={"full"}

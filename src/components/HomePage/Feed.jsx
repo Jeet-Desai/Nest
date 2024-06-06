@@ -10,7 +10,7 @@ const Feed = () => {
     }, 2000);
   },[])
   return (
-    <Container  maxW={"container.sm"} px={3}>
+    <Container  maxW={"container.sm"} px={0}>
 
         {isloading ? (
           [0,1,2,3].map((item,index)=>(

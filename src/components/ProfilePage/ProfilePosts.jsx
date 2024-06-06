@@ -33,6 +33,26 @@ const ProfilePosts = () => {
     <ProfilePost img={"Jeet-8.jpg"}/>
     <ProfilePost img={"Jeet-9.jpg"}/>
     <ProfilePost img={"Jeet-10.jpg"}/>
+    <ProfilePost img={"Jeet-1.jpg"}/>
+    <ProfilePost img={"Jeet-2.jpg"}/>
+    <ProfilePost img={"Jeet-3.jpg"}/>
+    <ProfilePost img={"Jeet-4.jpg"}/>
+    <ProfilePost img={"Jeet-5.jpg"}/>
+    <ProfilePost img={"Jeet-6.jpg"}/>
+    <ProfilePost img={"Jeet-7.jpg"}/>
+    <ProfilePost img={"Jeet-8.jpg"}/>
+    <ProfilePost img={"Jeet-9.jpg"}/>
+    <ProfilePost img={"Jeet-10.jpg"}/>
+    <ProfilePost img={"Jeet-1.jpg"}/>
+    <ProfilePost img={"Jeet-2.jpg"}/>
+    <ProfilePost img={"Jeet-3.jpg"}/>
+    <ProfilePost img={"Jeet-4.jpg"}/>
+    <ProfilePost img={"Jeet-5.jpg"}/>
+    <ProfilePost img={"Jeet-6.jpg"}/>
+    <ProfilePost img={"Jeet-7.jpg"}/>
+    <ProfilePost img={"Jeet-8.jpg"}/>
+    <ProfilePost img={"Jeet-9.jpg"}/>
+    <ProfilePost img={"Jeet-10.jpg"}/>
 
     </>
 )}

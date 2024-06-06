@@ -31,7 +31,7 @@ const HomePage = () => {
           />
         </motion.div>
       </Flex>
-      <Container maxW="container.lg">
+      <Container maxW="container.lg" px={0}>
         <Flex gap={20}>
           <Box flex={2} py={{ md: 5 }}>
             <Feed />

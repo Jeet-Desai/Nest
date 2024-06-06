@@ -13,7 +13,7 @@ const PageLayout = ({ children }) => {
   const canRenderSidebar = pathname !== "/auth" && user;
   const canRenderNavbar = pathname !== "/auth" && !user;
   return (
-    <Flex direction={canRenderNavbar ? "column": {base:"column",md:"row"}} h={"100vh"}>
+    <Flex direction={canRenderNavbar ? "column": {base:"column",md:"row"}} h={"100vh"} overflowY={"auto"}>
       <Box>
         {canRenderSidebar ? (
           <Box display={{base:"none",md:"block"}} w={"200px"}>

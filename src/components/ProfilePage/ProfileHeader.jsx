@@ -7,8 +7,10 @@ const ProfileHeader = () => {
       alignItems={{ base: "flex-start" }}
       direction={{ base: "column", bp830: "row" }}
       w={"full"}
-      px={{ base: 0, bp830: 10 }}
-      py={0}
+      px={3}
+      pb={2}
+      borderBottom={"1px solid"}
+      borderColor={"#4d7f96"}
     >
       <AvatarGroup size={{ base: "xl", bp830: "2xl" }} alignSelf={"flex-start"}>
         <Avatar src={"profile-pic.png"} alt={"jeetdesaimusic"} />
