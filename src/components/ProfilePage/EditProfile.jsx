@@ -42,6 +42,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 		}
 	}, [authUser]);
 
+
 	const {editPic,selectedFile,setSelectedFile} = useEditPic();
 
 	/*DELTE LATER */
@@ -66,6 +67,19 @@ const EditProfile = ({ isOpen, onClose }) => {
 			showToast("Error",error.message,"error");
 		}
 	}
+
+	const handleCancel= ()=>{
+		if (authUser) {
+			setInputs({
+				userName: authUser.userName || "",
+				fullName: authUser.fullName || "",
+				bio: authUser.bio || "",
+			});
+		}
+		setSelectedFile(null);
+		onClose();
+	}
+
 
 	return (
 		<>
@@ -115,10 +129,7 @@ const EditProfile = ({ isOpen, onClose }) => {
 										w='full'
 										size='sm'
 										_hover={{ bg: "red.500" }}
-										onClick={()=>{
-											setSelectedFile(null);
-											onClose();
-										}}
+										onClick={handleCancel}
 									>
 										Cancel
 									</Button>
