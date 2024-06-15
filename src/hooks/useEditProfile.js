@@ -16,14 +16,14 @@ const useEditProfile = () => {
   const editProfile = async (inputs, profilePic) => {
     if (isUpdating || !authUser) return;
     setIsUpdating(true);
-    const storageRef = ref(storage,`profilePictues/${authUser.userName}`)
+    const storageRef = ref(storage,`profilePictues/${authUser.uid}`)
     const userRef = doc(firestore,"users",authUser.uid)
     let URL=""
     try {
         if(profilePic)
         {
         await uploadString(storageRef,profilePic,"data_url")
-        URL = await getDownloadURL(ref(storage,`profilePictues/${authUser.userName}`))
+        URL = await getDownloadURL(ref(storage,`profilePictues/${authUser.uid}`))
         }
         const updatedUser = {
             ...authUser,
