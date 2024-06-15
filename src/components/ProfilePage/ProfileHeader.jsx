@@ -1,8 +1,16 @@
-import { Avatar, AvatarGroup, Button, Flex, Text } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import React from "react";
+import useAuthStore from "../../store/useAuthStore";
+import EditProfile from "./EditProfile";
 
 const ProfileHeader = ({userProfile}) => {
+  
+  const authUser = useAuthStore(state=>state.user);
+  const canEdit = authUser && authUser.userName===userProfile.userName;
+  const canFollow = authUser && authUser.userName !== userProfile.userName;
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
+    <>
     <Flex
       alignItems={{ base: "flex-start" }}
       direction={{ base: "column", bp830: "row" }}
@@ -21,7 +29,7 @@ const ProfileHeader = ({userProfile}) => {
         pl={{ base: 0, bp830: 20 }}
         alignItems={"flex-start"}
       >
-        <Flex w="full" gap={5} justifyContent={"space-between"} alignItems={"center"}>
+        {canEdit && (<Flex w="full" gap={5} justifyContent={"space-between"} alignItems={"center"}>
           <Text fontSize={18} fontWeight={600}>{userProfile.userName}</Text>
           <Button
             _hover={{ bg: "#383838", color: "white" }}
@@ -29,10 +37,34 @@ const ProfileHeader = ({userProfile}) => {
             color={"white"}
             fontSize={15}
             h={7}
+            onClick={onOpen}
           >
             Edit Profile
           </Button>
-        </Flex>
+        </Flex>)}
+
+        {canFollow && (<Flex w="full" gap={5} justifyContent={"space-between"} alignItems={"center"}>
+          <Text fontSize={18} fontWeight={600}>{userProfile.userName}</Text>
+          <Button
+              bg={"black"}
+              style={{ textDecoration: "none" }}
+              border={"1px solid"}
+              borderColor={"white"}
+              color={"white"}
+              _hover={{
+                bg: "#3559E0",
+                color: "white",
+                border: "1px solid",
+                borderColor: "#3559E0",
+              }}
+              transition={"0.2s ease-in-out"}
+            //   fontSize={{ base: "12px", sm: "14px", md: "60px" }}
+              size={"sm"}
+            >
+              Follow
+            </Button>
+        </Flex>)}
+        
         <Text mt={4} fontSize={16}>
           <Text as={"span"} fontWeight={"bold"} mr={1}>
             {userProfile.posts.length}
@@ -57,6 +89,8 @@ const ProfileHeader = ({userProfile}) => {
         </Flex>
       </Flex>
     </Flex>
+    {canEdit && <EditProfile isOpen={isOpen} onClose={onClose}/>}
+    </>
   );
 };
 

@@ -4,7 +4,7 @@ import React from 'react'
 const PostHeader = (props) => {
   return (
     <div>
-      <Flex alignItems={"center"} justifyContent={"space-between"}  py={5} px={{base:2,bp830:0}}>
+      <Flex alignItems={"center"} justifyContent={"space-between"}  py={5} px={{base:2,md:0}}>
         <Flex alignItems={"center"}>
           <Avatar src={props.avatar} size={"sm"}/>
           <Text ml={2}>{props.username}</Text>

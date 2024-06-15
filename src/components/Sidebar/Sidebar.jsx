@@ -49,7 +49,7 @@ const Sidebar = () => {
         <Avatar
           size={"xs"}
           name={"Jeet Desai MUSIC"}
-          src={"/profile-pic.png"}
+          src={authUser.profilePicURL}
         />
       ),
       text: "Profile",

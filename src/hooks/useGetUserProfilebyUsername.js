@@ -5,7 +5,7 @@ import { firestore } from '../firebase/firebase';
 import useProfileStore from '../store/useProfileStore';
 
 const useGetUserProfilebyUsername = (username) => {
-    const [isLoading,setLoading]=useState(false);
+    const [isLoading,setLoading]=useState(true);
     const showToast = useShowToast();
     const {userProfile,setUserProfile}=useProfileStore();
 
