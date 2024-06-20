@@ -9,10 +9,16 @@ const SuggestedHeader = () => {
   const authUser = useAuthStore(state=>state.user);
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"} mt={4} w={"full"}>
+      
       <Flex alignItems={"center"}>
+      <Link as={RouterLink} to={`${authUser.userName}`}>
         <Avatar src={authUser.profilePicURL} size={"md"} />
+        </Link>
+        <Link _hover={{textDecoration:"none"}} as={RouterLink} to={`${authUser.userName}`}>
         <Text ml={3} fontSize={14} fontWeight={600}>{authUser.userName}</Text>
+        </Link>
       </Flex>
+      
 
       <Button
         bg={"transparent"}

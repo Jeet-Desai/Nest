@@ -36,7 +36,7 @@ const ProfilePage = () => {
     >
       <Flex direction={"column"} w={"full"} gap={8}>
         {!isLoading && userProfile ? (
-          <ProfileHeader userProfile={userProfile} />
+          <ProfileHeader/>
         ) : (
           <ProfileHeaderSkeleton />
         )}

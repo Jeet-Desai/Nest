@@ -48,12 +48,13 @@ const PostFooter = (props) => {
         <Text mt={2}>{likecount} likes</Text>
         {props.caption ?(
           <Text pl={0.5}>
-          <Text as={"span"} fontWeight={"bold"}>{props.username}</Text>
+          <Text pl={0} as={"span"} fontWeight={"bold"}>{props.username}</Text>
           <Text as={"span"}>{" "+props.caption}</Text>
+          <Text mt={2} pl={0}color={"gray"} display={props.page=="profile" ? "none" : "block"}>View all 50 comments</Text>
         </Text>
         ) :null}
         
-        <Text mt={2} color={"gray"} display={props.page=="profile" ? "none" : "block"}>View all 50 comments</Text>
+        
         {/* <Flex justifyContent={"space-between"} alignItems={"center"}> */}
         {/* </Flex> */}
         {showComment || props.page=="profile" ? (

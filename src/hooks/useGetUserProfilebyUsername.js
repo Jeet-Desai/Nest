@@ -34,7 +34,7 @@ const useGetUserProfilebyUsername = (username) => {
         }
     }
     getProfile();
-},[])
+},[username])
     return {isLoading,userProfile}
 }
 

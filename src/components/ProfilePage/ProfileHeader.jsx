@@ -2,12 +2,15 @@ import { Avatar, AvatarGroup, Button, Flex, Text, useDisclosure } from "@chakra-
 import React from "react";
 import useAuthStore from "../../store/useAuthStore";
 import EditProfile from "./EditProfile";
+import useFollowUnfollow from "../../hooks/useFollowUnfollow";
+import useProfileStore from "../../store/useProfileStore";
 
-const ProfileHeader = ({userProfile}) => {
-  
+const ProfileHeader = () => {
+  const userProfile = useProfileStore(state=>state.userProfile);
   const authUser = useAuthStore(state=>state.user);
   const canEdit = authUser && authUser.userName===userProfile.userName;
   const canFollow = authUser && authUser.userName !== userProfile.userName;
+  const {isFollowing,isUpdating,FollowUnfollow}= useFollowUnfollow(userProfile.uid);
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
@@ -46,22 +49,24 @@ const ProfileHeader = ({userProfile}) => {
         {canFollow && (<Flex w="full" gap={5} justifyContent={"space-between"} alignItems={"center"}>
           <Text fontSize={18} fontWeight={600}>{userProfile.userName}</Text>
           <Button
-              bg={"black"}
+              bg="#3559E0"
               style={{ textDecoration: "none" }}
               border={"1px solid"}
-              borderColor={"white"}
+              borderColor={"#3559E0"}
               color={"white"}
               _hover={{
-                bg: "#3559E0",
+                bg: "#2C46B0",
                 color: "white",
                 border: "1px solid",
-                borderColor: "#3559E0",
+                borderColor: "#2C46B0",
               }}
+              isLoading={isUpdating}
+              onClick={FollowUnfollow}
               transition={"0.2s ease-in-out"}
             //   fontSize={{ base: "12px", sm: "14px", md: "60px" }}
               size={"sm"}
             >
-              Follow
+              {isFollowing ? "Unfollow" : "Follow"}
             </Button>
         </Flex>)}
         
