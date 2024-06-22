@@ -10,57 +10,17 @@ import {
   AvatarGroup,
   Button,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { AiFillHome } from "react-icons/ai";
-import { IoSearch } from "react-icons/io5";
+import { React,useEffect, useState } from "react";
 import { SlLogout } from "react-icons/sl";
-import { MdNotificationsActive } from "react-icons/md";
-import { IoIosAddCircle } from "react-icons/io";
-import { Link as RouterLink } from "react-router-dom";
 import {motion} from "framer-motion"
-import { CgProfile } from "react-icons/cg";
-import { useSignOut } from "react-firebase-hooks/auth";
 import useLogout from "../../hooks/useLogout";
-import useAuthStore from "../../store/useAuthStore";
+import Home from "./Home";
+import Notifications from "./Notifications";
+import Create from "./Create";
+import Profile from "./Profile";
+import Search from "./Search";
 
 const Sidebar = () => {
-  
-  const authUser = useAuthStore(state=>state.user);
-  const sidebarItems = [
-    {
-      icon: <AiFillHome />,
-      text: "Home",
-      link: "/",
-    },
-    {
-      icon: <IoSearch />,
-      text: "Search",
-    },
-    {
-      icon: <MdNotificationsActive />,
-      text: "Notifications",
-    },
-    {
-      icon: <IoIosAddCircle />,
-      text: "Create",
-    },
-    {
-      icon: (
-        <Avatar
-          size={"xs"}
-          name={"Jeet Desai MUSIC"}
-          src={authUser.profilePicURL}
-        />
-      ),
-      text: "Profile",
-      link: `/${authUser?.userName}`,
-    },
-    // {
-    //   icon:<SlLogout />,
-    //   text:"Logout",
-    //   link:"/auth"
-    // }
-  ];
 
   const {signOutUser,isLoggingOut}=useLogout();
   const [rot,activate]=useState(true);
@@ -86,7 +46,7 @@ const Sidebar = () => {
       <Flex
         justifyContent={{base:"space-between",md:"flex-start"}}
         direction={{ base: "row", md: "column" }}
-        gap={{base:0,md:5}}
+        gap={{base:0,md:4}}
         h={"full"}
         w={"full"}
       >
@@ -104,47 +64,16 @@ const Sidebar = () => {
             </Text>
           </Flex>
         </Flex>
+        
 
         {/* <Link to={"/"} as={RouterLink} pl={2} display={{base:"block",md:"none"}}>
           <AiFillHome />
         </Link> */}
-        {sidebarItems.map((item, index) => {
-          return (
-            <Tooltip
-            key={index}
-              openDelay={300}
-              hasArrow
-              label={item.text}
-              display={{ base: "block", md: "none" }}
-            >
-              <Link
-                // display={"flex"}
-                to={item.link || null}
-                as={RouterLink}
-                alignItems={"center"}
-                // justifyContent={{base:"center",md:"flex-start"}}
-                fontSize={"29px"}
-                _hover={{ bg: "whiteAlpha.400" }}
-                
-              >
-                <Flex alignItems={"center"} justifyContent={"center"} w={10} h={10} display={{base:"flex",md:"none"}}>
-                {item.icon}
-                </Flex>
-                <Flex w={168} display={{base:"none",md:"flex"}}
-                h={9} alignItems={"center"} justifyContent={{base:"center",md:"flex-start"}}>
-                <Flex w={8}>
-                {item.icon}
-                </Flex>
-                <Box ml={2} fontSize={18} display={{base:"none",md:"block"}}>
-                  {item.text}
-                </Box>
-                </Flex>
-                
-
-              </Link>
-            </Tooltip>
-          );
-        })}
+        <Home />
+        <Search/>
+        <Notifications />
+        <Create/>
+        <Profile/>
         <Tooltip
               openDelay={300}
               hasArrow
@@ -158,13 +87,14 @@ const Sidebar = () => {
                 mt={{md:"auto"}}
                 onClick={signOutUser}
                 cursor={"pointer"}
+                borderRadius={5}
               >
-                <Flex alignItems={"center"} justifyContent={"center"} w={10} h={10} display={{base:"flex",md:"none"}}>
+                <Flex  pb={"6px"} pr={1} alignItems={"center"} justifyContent={"center"} w={10} h={10} display={{base:"flex",md:"none"}}>
                 <SlLogout />
                 </Flex>
                 <Flex w={168} display={{base:"none",md:"flex"}}
                 h={9} alignItems={"center"} justifyContent={{base:"center",md:"flex-start"}}>
-                <Flex>
+                <Flex ml={2}>
                 <SlLogout />
                 </Flex>
                 <Button p={0} fontWeight={400} isLoading={isLoggingOut} _hover={{bg:"transparent"}} bg={"transparent"} ml={3.5} fontSize={18} display={{base:"none",md:"block"}}>

@@ -30,11 +30,14 @@ const useFollowUnfollow = (otherUserID) => {
             following: user.following.filter((uid)=>uid!==otherUserID)
         }
         updateUser(updatedUser)
+        if(userProfile)
+          {
         setUserProfile({
             ...userProfile,
             followers: userProfile.followers.filter((uid)=>uid!==user.uid)
 
         })
+      }
         localStorage.setItem("user-info",JSON.stringify(updatedUser))
         setFollowing(false);
       }
@@ -45,10 +48,13 @@ const useFollowUnfollow = (otherUserID) => {
             following: [...user.following,otherUserID]
         }
         updateUser(updatedUser);
+        if(userProfile)
+          {
         setUserProfile({
             ...userProfile,
             followers : [...userProfile.followers,user.uid]
         })
+      }
         localStorage.setItem("user-info",JSON.stringify(updatedUser));
         setFollowing(true);
 

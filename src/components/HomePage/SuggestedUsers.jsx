@@ -15,9 +15,9 @@ const SuggestedUsers = () => {
         </Flex>
 
         <VStack w={"full"} >
-            <SuggestedUser username="dilipbhainaik" avatar="profile-pic-6.jpg" followers="50k"/>
-            <SuggestedUser username="rushan_bot" avatar="profile-pic-5.jpg" followers="7"/>
-            <SuggestedUser username="jimit_desai03" avatar="profile-pic-4.jpg" followers="700"/>
+            {/* <SuggestedUser username="dilipbhainaik" avatar="profile-pic-6.jpg" followers="50k"/> */}
+            {/* <SuggestedUser username="rushan_bot" avatar="profile-pic-5.jpg" followers="7"/> */}
+            {/* <SuggestedUser username="jimit_desai03" avatar="profile-pic-4.jpg" followers="700"/> */}
         </VStack>
 
         <Box mt={2} fontSize={13.5} alignSelf={"flex-start"}>
