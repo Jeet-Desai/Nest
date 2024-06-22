@@ -8,10 +8,10 @@ const SuggestedUser = ({user,setUser}) => {
   const authUser = useAuthStore(state=>state.user);
 
   const handleFollowUnfollow = async()=>{
-    await FollowUnfollow();
+    await FollowUnfollow(); //This does not change below isfollowing
     setUser({...user,
-      followers : !isFollowing ?  [...user.followers, authUser] : 
-      user.followers.filter((follower) => follower.uid !== authUser.uid)
+      followers : !isFollowing ?  [...user.followers, authUser.uid] : 
+      user.followers.filter((follower) => follower !== authUser.uid)
   })
   }
   return (
