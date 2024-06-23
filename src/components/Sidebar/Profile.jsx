@@ -44,7 +44,6 @@ const Profile = () => {
             <Flex ml={2} justifyContent={"center"} w={8} >
               <Avatar
                 size={"xs"}
-                name={"Jeet Desai MUSIC"}
                 src={authUser.profilePicURL}
               />
             </Flex>
