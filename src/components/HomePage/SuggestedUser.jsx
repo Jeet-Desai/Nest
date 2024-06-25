@@ -1,7 +1,9 @@
 import { Button, Box, Avatar, Flex, Text, VStack } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
 import React, { useState } from "react";
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 import useAuthStore from "../../store/useAuthStore";
+import { Link } from "react-router-dom";
 
 const SuggestedUser = ({ user, setUser, removeUser }) => {
   const { isFollowing, isUpdating, FollowUnfollow } = useFollowUnfollow(
@@ -30,11 +32,15 @@ const SuggestedUser = ({ user, setUser, removeUser }) => {
       w={"full"}
     >
       <Flex>
+      <Link as={RouterLink} to={`${user.userName}`}>
         <Avatar src={user.profilePicURL} size={"md"} />
+        </Link>
         <VStack ml={3} gap={0} justifyContent={"center"}>
+        <Link as={RouterLink} to={`${user.userName}`}>
           <Text fontSize={14} fontWeight={"600"}>
             {user.userName}
           </Text>
+          </Link>
           <Text
             color={"rgb(168, 168, 168)"}
             alignSelf={"flex-start"}
