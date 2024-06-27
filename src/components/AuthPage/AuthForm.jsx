@@ -28,7 +28,7 @@ const AuthForm = () => {
         >
           <VStack spacing={4}>
             {isLogin ? <Login/> : <SignUp/>}
-            <GoogleAuth/>
+            {/* <GoogleAuth/> */}
           </VStack>
         </Box>
         <Flex>
