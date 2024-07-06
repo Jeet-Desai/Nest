@@ -55,7 +55,7 @@ const Search = () => {
           </Flex>
         </Flex>
       </Tooltip>
-      <Modal motionPreset="slideInLeft" isOpen={isOpen} onClose={()=>{
+      <Modal isOpen={isOpen} onClose={()=>{
         setUser(null);
         onClose();
       }}>

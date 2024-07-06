@@ -35,7 +35,7 @@ const SuggestedUser = ({ user, setUser, removeUser }) => {
       <Link as={RouterLink} to={`${user.userName}`}>
         <Avatar src={user.profilePicURL} size={"md"} />
         </Link>
-        <VStack ml={3} gap={0} justifyContent={"center"}>
+        <VStack ml={3} gap={0} justifyContent={"center"} alignItems={"flex-start"}>
         <Link as={RouterLink} to={`${user.userName}`}>
           <Text fontSize={14} fontWeight={"600"}>
             {user.userName}

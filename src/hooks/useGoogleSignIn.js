@@ -1,53 +1,63 @@
-import React from "react";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { auth, firestore } from "../firebase/firebase";
-import useShowToast from "./useShowToast";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
-import { set } from "firebase/database";
-import useAuthStore from "../store/useAuthStore";
+// useGoogleSignIn.js
+import { auth } from '../firebase/firebase';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { firestore } from '../firebase/firebase';
+import useShowToast from './useShowToast';
+import useAuthStore from '../store/useAuthStore';
+import { useState } from 'react';
 
 const useGoogleSignIn = () => {
-  const [signInWithGoogle, , loading, error] = useSignInWithGoogle(auth);
   const showToast = useShowToast();
   const authLogin = useAuthStore((state) => state.loginUser);
-  const signIn = async () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const signInWithGoogle = async () => {
+    setLoading(true);
     try {
-      const userCred = await signInWithGoogle();
-      if (!userCred && error) showToast("Error", error.message, error);
-      const docref = doc(firestore, "users", userCred.user.uid);
-      const docSnap = await getDoc(docref);
-      if (userCred && !docSnap) {
-        const userDoc = {
-          uid: userCred.user.uid,
-          email: userCred.user.email,
-          userName: userCred.user.email.split("@")[0],
-          fullName: userCred.user.displayName,
-          bio: "",
-          profilePicURL: userCred.user.photoURL,
-          followers: [],
-          following: [],
-          posts: [],
-          createdAt: Date.now(),
-        };
-        await setDoc(doc(firestore, "users", userCred.user.uid), userDoc);
-        localStorage.setItem("user-info", JSON.stringify(userDoc));
-        authLogin(userDoc);
-        showToast(
-          "Login Successful",
-          "Welcome " + userCred.user.displayName,
-          "success"
-        );
-      } else if (docSnap) {
-        localStorage.setItem("user-info", JSON.stringify(docSnap.data()));
-        authLogin(docSnap.data());
-        showToast("Success", "Welcome " + userCred.user.displayName, "success");
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      const user = result.user;
+      if (user) {
+        const userRef = doc(firestore, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+
+        if (!docSnap.exists()) {
+          const userDoc = {
+            uid: user.uid,
+            email: user.email,
+            userName: user.email.split('@')[0],
+            fullName: user.displayName,
+            bio: '',
+            profilePicURL: user.photoURL,
+            followers: [],
+            following: [],
+            posts: [],
+            createdAt: Date.now(),
+          };
+
+          await setDoc(userRef, userDoc);
+          localStorage.setItem('user-info', JSON.stringify(userDoc));
+          authLogin(userDoc);
+          showToast('Login Successful', `Welcome ${user.displayName}`, 'success');
+        } else {
+          const userData = docSnap.data();
+          localStorage.setItem('user-info', JSON.stringify(userData));
+          authLogin(userData);
+          showToast('Success', `Welcome ${user.displayName}`, 'success');
+        }
       }
     } catch (error) {
-      showToast("Error", error.message, "error");
+      setError(error);
+      showToast('Error', error.message, 'error');
+    } finally {
+      // setLoading(false);
     }
   };
 
-  return { loading, error, signIn };
+  return { signInWithGoogle, loading, error };
 };
 
 export default useGoogleSignIn;
