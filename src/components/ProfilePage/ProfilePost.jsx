@@ -11,7 +11,7 @@ import {
   VStack,
   useDisclosure,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { FaComment } from "react-icons/fa";
 import { FilledCommentLogo } from "../../icons/icons";
@@ -27,9 +27,45 @@ import {
 import { MdDelete } from "react-icons/md";
 import Comment from "./Comment";
 import PostFooter from "../HomePage/PostFooter";
+import useProfileStore from "../../store/useProfileStore";
+import useAuthStore from "../../store/useAuthStore";
+import { deleteObject, ref } from "firebase/storage";
+import { firestore, storage } from "../../firebase/firebase";
+import { arrayRemove, deleteDoc, doc, updateDoc } from "firebase/firestore";
+import useShowToast from "../../hooks/useShowToast";
 
-const ProfilePost = (props) => {
+const ProfilePost = ({post}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const userProfile = useProfileStore(state=>state.userProfile)
+  const authUser=useAuthStore(state=>state.user)
+  const [isDeleting,setDeleting]=useState(false);
+  const deleteUserPost = useProfileStore(state=>state.deletePost)
+  const showToast=useShowToast();
+  const deletePost = async(id)=>{
+    if(!window.confirm("Are you sure you want to delete this post ?"))
+      return;
+    if(isDeleting)
+      return;
+    setDeleting(true)
+    try {
+      const imgRef= ref(storage,`posts/${id}`);
+      await deleteObject(imgRef);
+      const postRef = doc(firestore,"posts",id);
+      const userRef= doc(firestore,"users",authUser.uid);
+      await deleteDoc(postRef)
+      await updateDoc(userRef,{
+        posts:arrayRemove(id)
+      })
+      deleteUserPost(id)
+      showToast("Success","Post deleted successfully!","success")
+      
+    } catch (error) {
+      showToast("Error",error.message,"error")
+    }
+    finally{
+      setDeleting(false);
+    }
+  }
   return (
     <>
       <GridItem
@@ -56,18 +92,18 @@ const ProfilePost = (props) => {
           <Flex alignItems={"center"}>
             <AiFillHeart size={22} />
             <Text fontWeight={"bold"} ml={"2px"}>
-              10
+              {post.likes.length}
             </Text>
           </Flex>
           <Flex alignItems={"center"}>
             <FilledCommentLogo />
             <Text fontWeight={"bold"} ml={1}>
-              5
+              {post.comments.length}
             </Text>
           </Flex>
         </Flex>
 
-        <Img src={props.img} h={"100%"} w={"100%"} objectFit={"cover"} />
+        <Img src={post.imageURL} h={"100%"} w={"100%"} objectFit={"cover"} />
       </GridItem>
 
       <Modal
@@ -80,19 +116,21 @@ const ProfilePost = (props) => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody bg={"black"} pb={5}>
-            <Flex gap={4} w={{ base: "70%", md: "full" }} p={3} mx={"auto"}>
-              <Box
+            <Flex gap={4} w={{ base: "70%", md: "full" }} p={3} mx={"auto"} maxH={"90vh"}
+                minH={"50vh"}>
+              <Flex
                 flex={1.5}
                 borderRadius={4}
                 overflow={"hidden"}
                 border={"1px solid"}
                 borderColor={"whiteAlpha.300"}
                 aspectRatio={"4/5"}
-
+                justifyContent={"center"}
+                alignItems={"center"}
               >
                 <Image 
-                objectFit={"cover"} w={"100%"} h={"100%"} src={props.img} alt={"Profile Post"} />
-              </Box>
+                objectFit={"cover"}  src={post.imageURL} alt={"Profile Post"} />
+              </Flex>
               <Flex
                 flex={1}
                 flexDir={"column"}
@@ -102,18 +140,20 @@ const ProfilePost = (props) => {
                 <Flex alignItems={"center"} justifyContent={"space-between"}>
                   <Flex alignItems={"center"}>
                     <Avatar
-                      src="profile-pic.png"
+                      src={userProfile.profilePicURL}
                       alt="profile picture"
                       size={"sm"}
                     />
                     <Text fontSize={14} ml={2} fontWeight={600}>
-                      jeetdesaimusic
+                      {userProfile.userName}
                     </Text>
                   </Flex>
 
-                  <Button bg={"transparent"}>
+                  {authUser?.userName===userProfile.userName && <Button isLoading={isDeleting} bg={"transparent"} onClick={()=>{
+                    deletePost(post.id)
+                    }}>
                     <MdDelete />
-                  </Button>
+                  </Button>}
                 </Flex>
                 <Divider my={4} bg={"gray.400"} />
 
@@ -145,5 +185,6 @@ const ProfilePost = (props) => {
     </>
   );
 };
+
 
 export default ProfilePost;

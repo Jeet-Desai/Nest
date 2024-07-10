@@ -15,6 +15,8 @@ const useCreatePost = () => {
     const [isUpdating,setUpdating]=useState(false);
 
     const createPost = async(image,caption)=>{
+        if(isUpdating)
+            return;
       if (!image) {
         showToast("Error", "Please select an image", "error");
         return;
@@ -38,7 +40,7 @@ const useCreatePost = () => {
            
             await updateDoc(postDoc,{imageURL:imageURL});
             newPost.imageURL=imageURL;
-            postStorecreate({...newPost,id:postDoc.id})
+            // postStorecreate({...newPost,id:postDoc.id})
             addPost({...newPost,id:postDoc.id});
             showToast("Success","Post created successfully!","success");
         } catch (error) {

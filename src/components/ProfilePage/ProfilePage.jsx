@@ -1,12 +1,12 @@
 import {
   Container,
-  Divider,
   Flex,
   Text,
   Link,
   Skeleton,
   SkeletonCircle,
   VStack,
+  Grid,
 } from "@chakra-ui/react";
 import React from "react";
 import ProfileHeader from "./ProfileHeader";
@@ -15,16 +15,20 @@ import ProfilePosts from "./ProfilePosts";
 import useAuthStore from "../../store/useAuthStore";
 import { Link as RouterLink, useLocation, useParams } from "react-router-dom";
 import useGetUserProfilebyUsername from "../../hooks/useGetUserProfilebyUsername";
-
+import ProfilePost from "./ProfilePost";
 
 const ProfilePage = () => {
+  const { username } = useParams();
+  const { isLoading, userProfile } = useGetUserProfilebyUsername(username);
+  const userNotFound = !isLoading && !userProfile;
   const { pathname } = useLocation();
   const Authenticated = useAuthStore();
   const user = Authenticated.user;
   const canRenderNavbar = pathname !== "/auth" && !user;
-  const { username } = useParams();
-  const { isLoading, userProfile } = useGetUserProfilebyUsername(username);
-  const userNotFound = !isLoading && !userProfile;
+
+  // Log userProfile to debug
+  // console.log("ProfilePage: userProfile:", userProfile);
+
   if (userNotFound) return <UserNotFound />;
 
   return (
@@ -32,23 +36,30 @@ const ProfilePage = () => {
       maxW={"container.lg"}
       h={"100vh"}
       py={canRenderNavbar ? { base: 2, md: 5 } : 10}
-      px={{base:0,md:3}}
+      px={{ base: 0, md: 3 }}
     >
       <Flex direction={"column"} w={"full"} gap={8}>
         {!isLoading && userProfile ? (
-          <ProfileHeader/>
+          <ProfileHeader />
         ) : (
           <ProfileHeaderSkeleton />
         )}
-        <Flex
-          direction={"column"}
-          w={"full"}
-          // borderTop={"1px solid"}
-          // borderColor={"#4d7f96"}
-          px={{ base: 0, md: 0 }}
-        >
+        <Flex direction={"column"} w={"full"} px={{ base: 0, md: 0 }}>
           <ProfileTabs />
-          <ProfilePosts />
+          {isLoading ? (
+            <Grid
+              mt={5}
+              templateColumns={"repeat(3, 1fr)"}
+              justifyContent={"center"}
+              gap={1}
+            >
+              {[0, 1, 2].map((item, index) => (
+              <Skeleton key={index} w={"full"} h={{ base: 170, md: 300 }} />
+              ))}
+            </Grid>
+          ) : (
+            <ProfilePosts />
+          )}
         </Flex>
       </Flex>
     </Container>
@@ -68,7 +79,6 @@ const ProfileHeaderSkeleton = () => {
       alignItems={"center"}
     >
       <SkeletonCircle size="24" />
-
       <VStack
         alignItems={{ base: "center", sm: "flex-start" }}
         gap={2}

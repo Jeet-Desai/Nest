@@ -76,7 +76,7 @@ const Create = () => {
              style={{ marginTop: "15px", marginLeft: "5px", cursor: "pointer" }}
 							size={16}/>
             {selectedFile && (
-              <Flex mt={5} w={"full"} position={"relative"} justifyContent={"center"}>
+              <Flex mt={3} w={"full"} position={"relative"} justifyContent={"center"}>
                 <Image h={300} w={270} objectFit={"cover"} src={selectedFile} alt="Selected Image"/>
                 <CloseButton
                   position={"absolute"}

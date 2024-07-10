@@ -1,63 +1,49 @@
-import { Box,Flex, Grid, Skeleton } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { SiDgraph } from "react-icons/si";
+import React from "react";
+import { Box, Flex, Grid, Skeleton, Text, VStack } from "@chakra-ui/react";
 import ProfilePost from "./ProfilePost";
-
+import useFetchUserPosts from "../../hooks/useFetchUserPosts";
 
 const ProfilePosts = () => {
-  const [isLoading, Load] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      Load(false);
-    }, 2000);
-  }, []);
+  const { posts, isUpdating } = useFetchUserPosts();
+
+  if (!isUpdating && posts.length === 0) {
+    return (
+      <Flex flexDir="column" textAlign={"center"} mx={"auto"} mt={10}>
+        <Text fontSize={"2xl"}>No Posts Found!</Text>
+      </Flex>
+    );
+  }
   return (
-    <Grid mt={5}
-      templateColumns={"repeat(3,1fr)"}
-      justifyContent={"center"}
-      gap={1}
-    >
-      {isLoading ? ([0, 1, 2, 3, 4, 5, 6, 7, 8].map((item,index) => (
-        <Skeleton key={index} w={"full"} h={{base:170,md:300}}/>
+		<Grid
+			templateColumns={{
+				sm: "repeat(1, 1fr)",
+				md: "repeat(3, 1fr)",
+			}}
+			gap={1}
+			columnGap={1}
+      mt={5}
+		>
+			{isUpdating &&
+				[0, 1, 2].map((_, idx) => (
+					<VStack key={idx} alignItems={"flex-start"} gap={4}>
+						<Skeleton w={"full"}>
+							<Box h='300px'>contents wrapped</Box>
+						</Skeleton>
+					</VStack>
+				))}
 
-))) : (
-    <>
-    <ProfilePost img={"Jeet-1.jpg"}/>
-    <ProfilePost img={"Jeet-2.jpg"}/>
-    <ProfilePost img={"Jeet-3.jpg"}/>
-    <ProfilePost img={"Jeet-4.jpg"}/>
-    <ProfilePost img={"Jeet-5.jpg"}/>
-    <ProfilePost img={"Jeet-6.jpg"}/>
-    <ProfilePost img={"Jeet-7.jpg"}/>
-    <ProfilePost img={"Jeet-8.jpg"}/>
-    <ProfilePost img={"Jeet-9.jpg"}/>
-    <ProfilePost img={"Jeet-10.jpg"}/>
-    <ProfilePost img={"Jeet-1.jpg"}/>
-    <ProfilePost img={"Jeet-2.jpg"}/>
-    <ProfilePost img={"Jeet-3.jpg"}/>
-    <ProfilePost img={"Jeet-4.jpg"}/>
-    <ProfilePost img={"Jeet-5.jpg"}/>
-    <ProfilePost img={"Jeet-6.jpg"}/>
-    <ProfilePost img={"Jeet-7.jpg"}/>
-    <ProfilePost img={"Jeet-8.jpg"}/>
-    <ProfilePost img={"Jeet-9.jpg"}/>
-    <ProfilePost img={"Jeet-10.jpg"}/>
-    <ProfilePost img={"Jeet-1.jpg"}/>
-    <ProfilePost img={"Jeet-2.jpg"}/>
-    <ProfilePost img={"Jeet-3.jpg"}/>
-    <ProfilePost img={"Jeet-4.jpg"}/>
-    <ProfilePost img={"Jeet-5.jpg"}/>
-    <ProfilePost img={"Jeet-6.jpg"}/>
-    <ProfilePost img={"Jeet-7.jpg"}/>
-    <ProfilePost img={"Jeet-8.jpg"}/>
-    <ProfilePost img={"Jeet-9.jpg"}/>
-    <ProfilePost img={"Jeet-10.jpg"}/>
+			{!isUpdating && (
+				<>
+					{posts.map((post) => (
+						<ProfilePost post={post} key={post.id} />
+					))}
+				</>
+			)}
+		</Grid>
+	);
 
-    </>
-)}
-    </Grid>
-  );
+
 };
 
 export default ProfilePosts;
