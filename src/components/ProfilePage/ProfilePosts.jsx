@@ -21,14 +21,12 @@ const ProfilePosts = () => {
 			columnGap={1}
       mt={5}
 		>
-			{/* {isUpdating &&
+			{isUpdating &&
 				[0, 1, 2].map((_, idx) => (
 					<VStack key={idx} alignItems={"flex-start"} gap={4}>
-						<Skeleton w={"full"}>
-							<Box h='300px'>contents wrapped</Box>
-						</Skeleton>
+						<Skeleton key={idx} w={"full"} h={{ base: 170, md: 300 }} />
 					</VStack>
-				))} */}
+				))}
 
 			{!isUpdating && (
 				<>

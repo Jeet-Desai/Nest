@@ -1,21 +1,44 @@
-import { Avatar, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Flex, Link, Skeleton, SkeletonCircle, Text } from '@chakra-ui/react'
+import {Link as RouterLink} from "react-router-dom"
 import React from 'react'
+import useGetUserbyUID from '../../hooks/useGetUserbyUID';
+import { timeAgo } from './../../hooks/useTimeAgo';
 
 const Comment = (props) => {
+  const comment=props.comment;
+  const {userProfile,isUpdating,setUpdating}= useGetUserbyUID(comment.createdBy);
+  console.log("USER IS",userProfile);
+  // alert("CALLED")
+  if(isUpdating)
+    return(
+    <>
+    <Flex w={"full"} alignItems={"center"} gap={3}>
+      <SkeletonCircle/>
+      <Flex direction={"column"} gap={2}>
+        <Skeleton h={2} w={"200px"}/>
+        <Skeleton h={2} w={"60px"}/>
+      </Flex>
+    </Flex>
+    </>
+  )
   return (
     <>
         <Flex alignItems={"center"}>
-            <Avatar src={props.avatar} size={"sm"}/>
+            <Link as={RouterLink} to={`/${userProfile.userName}`} >
+            <Avatar src={userProfile?.profilePicURL} size={"sm"}/>
+            </Link>
             <Flex  direction={"column"} ml={4}>
             <Flex>
+            <Link as={RouterLink} to={`/${userProfile.userName}`} _hover={{textDecoration:"none"}}>
             <Text fontSize={14}fontWeight={600}>
-                      {props.username}
+                      {userProfile?.userName}
             </Text>
+            </Link>
             <Text fontSize={15} ml={2}>
-                {props.text}
+                {comment.commentText}
             </Text>
             </Flex>
-            <Text fontSize={12} color={"gray.500"}>{props.postedBefore}</Text>
+            <Text fontSize={12} color={"gray.500"}>{timeAgo(comment.createdAt)}</Text>
             </Flex>
         </Flex>
     </>

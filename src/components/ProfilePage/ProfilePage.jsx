@@ -46,18 +46,7 @@ const ProfilePage = () => {
         )}
         <Flex direction={"column"} w={"full"} px={{ base: 0, md: 0 }}>
           <ProfileTabs />
-          {isLoading ? (
-            <Grid
-              mt={5}
-              templateColumns={"repeat(3, 1fr)"}
-              justifyContent={"center"}
-              gap={1}
-            >
-              {[0, 1, 2].map((item, index) => (
-              <Skeleton key={index} w={"full"} h={{ base: 170, md: 300 }} />
-              ))}
-            </Grid>
-          ) : (
+          {!isLoading && (
             <ProfilePosts />
           )}
         </Flex>
