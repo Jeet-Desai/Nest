@@ -10,7 +10,7 @@ const Post = (props) => {
         <Box borderRadius={4} overflow={"hidden"}>
         <Image src={props.image}/>
         </Box>
-        <PostFooter username={props.username} caption={props.caption} page="home"/>
+        {/* <PostFooter username={props.username} caption={props.caption} page="home"/> */}
     </Box>
     
   )
