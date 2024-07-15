@@ -4,7 +4,6 @@ import ProfilePost from "./ProfilePost";
 import useFetchUserPosts from "../../hooks/useFetchUserPosts";
 
 const ProfilePosts = () => {
-
   const { posts, isUpdating } = useFetchUserPosts();
 
   if (!isUpdating && posts.length === 0) {

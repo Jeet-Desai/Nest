@@ -1,39 +1,36 @@
-import { Container, Flex, Box, VStack, SkeletonCircle, Image, Skeleton } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import Post from "./Post"
+import {
+  Container,
+  Flex,
+  Box,
+  VStack,
+  SkeletonCircle,
+  Image,
+  Skeleton,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import Post from "./Post";
+import useFetchFeedPosts from "../../hooks/useFetchFeedPosts";
 
 const Feed = () => {
-  const [isloading,setLoad]=useState(true);
-  useEffect(()=>{
-    setTimeout(() => {
-      setLoad(false);
-    }, 2000);
-  },[])
-  return (
-    <Container  maxW={"container.sm"} px={{base:0,md:3}}>
+  const { posts, isUpdating } = useFetchFeedPosts();
 
-        {isloading ? (
-          [0,1,2,3].map((item,index)=>(
+  return (
+    <Container maxW={"container.sm"} px={{ base: 0, md: 3 }}>
+      {isUpdating
+        && [0, 1, 2, 3].map((item, index) => (
             <VStack key={index} gap={4} mb={5} alignItems={"flex-start"}>
               <Flex alignItems={"center"} gap={2}>
-                <SkeletonCircle size={10}/>
-                <Skeleton height='10px' w={"200px"}/>
+                <SkeletonCircle size={10} />
+                <Skeleton height="10px" w={"200px"} />
               </Flex>
-              <Skeleton w={"full"} h={"500px"} border={"5px solid green"}/>
+              <Skeleton w={"full"} h={"500px"} border={"5px solid green"} />
             </VStack>
-            )
-          )
-        ) : (
-          <Box>
-          <Post username="jeetdesaimusic" image="profile-pic.png" avatar="profile-pic.png" caption="Bound by Beats ❤️"/>
-          <Post username="chaitalidesai" image="img6.jpg" avatar="profile-pic-2.jpg" caption="Loving myself!"/>
-          <Post username="mehul_p_desai" image="profile-pic-3.jpg" avatar="profile-pic-3.jpg" caption="A much needed escape!"/>
-          <Post username="jeetdesaimusic" image="img1.jpg" avatar="profile-pic.png" caption="Like father like son..."/>
-          </Box>
-        ) }
-        
+          ))
+        }
+        {!isUpdating  &&
+          posts.map((post) => <Post post={post}  key={post.id} />)}
     </Container>
-  )
-}
+  );
+};
 
-export default Feed
+export default Feed;
