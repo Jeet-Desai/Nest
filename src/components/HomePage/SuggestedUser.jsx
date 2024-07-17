@@ -53,7 +53,7 @@ const SuggestedUser = ({ user, setUser, removeUser }) => {
       {authUser.uid !== user.uid && (
         <Button
           color={"blue.600"}
-          _hover={{ color: "white", bg: "transparent" }}
+          _hover={{ color: "white", bg: "black" }}
           transition={"0.2s ease-in-out"}
           cursor={"pointer"}
           fontSize={14}
