@@ -8,7 +8,7 @@ const PostHeader = ({post,creator}) => {
   const {isFollowing,isUpdating,FollowUnfollow} = useFollowUnfollow(post.createdBy)
   return (
     <div>
-      <Flex alignItems={"center"} justifyContent={"space-between"}  py={5} px={{base:2,md:0}}>
+      <Flex alignItems={"center"} justifyContent={"space-between"}  py={5} px={{base:2,bp500:0}}>
         <Flex alignItems={"center"}>
           <Link as={RouterLink} to={`/${creator.userName}`} _hover={{textDecoration:"none"}} >
           <Avatar src={creator.profilePicURL} size={"sm"}/>

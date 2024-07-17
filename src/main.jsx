@@ -21,7 +21,8 @@ const config= {
 };
 
 const theme=extendTheme({config,styles},{breakpoints: {
-  bp830: "830px"
+  bp830: "830px",
+  bp500: "500px"
 }});
 
 ReactDOM.createRoot(document.getElementById('root')).render(

@@ -7,7 +7,7 @@ import useGetUserbyUID from '../../hooks/useGetUserbyUID'
 const Post = ({post}) => {
   const {userProfile,isUpdating,setUpdating} = useGetUserbyUID(post.createdBy)
   return (
-    <Box>
+    <Box w={{base:"full" ,bp500:480}} ml={"auto"} mr={"auto"}>
         {isUpdating && (
           <VStack gap={4} mb={5} alignItems={"flex-start"}>
           <Flex alignItems={"center"} gap={2}>
