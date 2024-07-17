@@ -136,7 +136,7 @@ const ProfilePost = ({ post }) => {
                 direction={"column"}
               >
                 <Image
-                h={400}
+                h={"80%"}
                   objectFit={"cover"}
                   src={post.imageURL}
                   alt={"Profile Post"}
