@@ -23,22 +23,25 @@ const Comment = (props) => {
   )
   return (
     <>
-        <Flex alignItems={"center"}>
+        <Flex>
             <Link as={RouterLink} to={`/${userProfile.userName}`} >
             <Avatar src={userProfile?.profilePicURL} size={"sm"}/>
             </Link>
             <Flex  direction={"column"} ml={4}>
             <Flex>
+            <Flex direction={"column"} alignItems={"flex-start"}>
             <Link as={RouterLink} to={`/${userProfile.userName}`} _hover={{textDecoration:"none"}}>
             <Text fontSize={14}fontWeight={600}>
                       {userProfile?.userName}
             </Text>
             </Link>
+            <Text fontSize={12} color={"gray.500"}>{timeAgo(comment.createdAt)}</Text>
+            </Flex>
             <Text fontSize={15} ml={2}>
                 {comment.commentText}
             </Text>
             </Flex>
-            <Text fontSize={12} color={"gray.500"}>{timeAgo(comment.createdAt)}</Text>
+
             </Flex>
         </Flex>
     </>
