@@ -122,6 +122,7 @@ const ProfilePost = ({ post }) => {
               mx={"auto"}
               maxH={"90vh"}
               minH={"50vh"}
+              direction={{base:"column",md:"row"}}
             >
               <Flex
                 flex={1.5}
@@ -132,12 +133,17 @@ const ProfilePost = ({ post }) => {
                 aspectRatio={"4/5"}
                 justifyContent={"center"}
                 alignItems={"center"}
+                direction={"column"}
               >
                 <Image
+                h={400}
                   objectFit={"cover"}
                   src={post.imageURL}
                   alt={"Profile Post"}
                 />
+                <Box mt={"auto"} mb={-6} w={"full"}>
+                  <PostFooter post={post} page="profile" />
+                </Box>
               </Flex>
               <Flex
                 flex={1}
