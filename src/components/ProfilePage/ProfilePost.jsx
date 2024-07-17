@@ -106,7 +106,7 @@ const ProfilePost = ({ post }) => {
       </GridItem>
 
       <Modal
-        size={{ base: "2xl", md: "5xl" }}
+        size={{ base: "4xl", md: "5xl" }}
         isCentered
         isOpen={isOpen}
         onClose={onClose}
@@ -117,12 +117,12 @@ const ProfilePost = ({ post }) => {
           <ModalBody bg={"black"} pb={5}>
             <Flex
               gap={4}
-              w={{ base: "70%", md: "full" }}
+              w={{ base: "80%", md: "full" }}
               p={3}
               mx={"auto"}
               maxH={"90vh"}
               minH={"50vh"}
-              direction={{base:"column",md:"row"}}
+              direction={{ base: "column", md: "row" }}
             >
               <Flex
                 flex={1.5}
@@ -130,20 +130,17 @@ const ProfilePost = ({ post }) => {
                 overflow={"hidden"}
                 border={"1px solid"}
                 borderColor={"whiteAlpha.300"}
-                aspectRatio={"4/5"}
+                aspectRatio={{ base: "1/1", md: "4/5" }}
                 justifyContent={"center"}
                 alignItems={"center"}
                 direction={"column"}
               >
                 <Image
-                h={"80%"}
+                  h={"100%"}
                   objectFit={"cover"}
                   src={post.imageURL}
                   alt={"Profile Post"}
                 />
-                <Box mt={"auto"} mb={-6} w={"full"}>
-                  <PostFooter post={post} page="profile" />
-                </Box>
               </Flex>
               <Flex
                 flex={1}
@@ -204,6 +201,9 @@ const ProfilePost = ({ post }) => {
                   <PostFooter post={post} page="profile" />
                 </Box>
               </Flex>
+              <Box display={{base:"block",md:"none"}} mt={"auto"} mb={-6} w={"full"}>
+                  <PostFooter post={post} page="profile" />
+                </Box>
             </Flex>
           </ModalBody>
         </ModalContent>
