@@ -173,18 +173,6 @@ const ProfilePost = ({ post }) => {
                       </Text>
                     </Flex>
                   </Flex>
-
-                  {authUser?.userName === userProfile.userName && (
-                    <Button
-                      isLoading={isDeleting}
-                      bg={"transparent"}
-                      onClick={() => {
-                        deletePost(post.id);
-                      }}
-                    >
-                      <MdDelete />
-                    </Button>
-                  )}
                 </Flex>
                 <Divider my={4} bg={"gray.400"} />
 
@@ -204,6 +192,18 @@ const ProfilePost = ({ post }) => {
               <Box display={{base:"block",md:"none"}} mt={"auto"} mb={-6} w={"full"}>
                   <PostFooter post={post} page="profile" />
                 </Box>
+                {authUser?.userName === userProfile.userName && (
+                    <Button
+                      isLoading={isDeleting}
+                      position={"absolute"}
+                      bg={"black"}
+                      onClick={() => {
+                        deletePost(post.id);
+                      }}
+                    >
+                      <MdDelete />
+                    </Button>
+                  )}
             </Flex>
           </ModalBody>
         </ModalContent>
