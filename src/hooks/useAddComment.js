@@ -19,6 +19,11 @@ const useAddComment = () => {
             showToast("Error","You need to be logged in to comment!","error");
             return;
         }
+        if(commentText=="")
+        {
+            showToast("Error","Please enter your comment!","error")
+            return
+        }
         setCommenting(true)
         const comment= {
             commentText,

@@ -6,13 +6,16 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import usePostStore from "../store/usePostStore";
 import useProfileStore from "../store/useProfileStore";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const useCreatePost = () => {
     const showToast= useShowToast();
     const authUser= useAuthStore(state=>state.user);
     const postStorecreate= usePostStore(state=>state.createPost);
     const addPost= useProfileStore(state=>state.addPost);
+    const userProfile = useProfileStore(state=>state.userProfile)
     const [isUpdating,setUpdating]=useState(false);
+    const {pathname} =useLocation()
 
     const createPost = async(image,caption)=>{
         if(isUpdating)
@@ -41,6 +44,7 @@ const useCreatePost = () => {
             await updateDoc(postDoc,{imageURL:imageURL});
             newPost.imageURL=imageURL;
             // postStorecreate({...newPost,id:postDoc.id})
+            if(pathname!="/" && userProfile.uid==authUser.uid)
             addPost({...newPost,id:postDoc.id});
             showToast("Success","Post created successfully!","success");
         } catch (error) {

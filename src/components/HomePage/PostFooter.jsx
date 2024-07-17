@@ -6,17 +6,15 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
-import { CiHeart } from "react-icons/ci";
-import { FaRegComment, FaV } from "react-icons/fa6";
 import { CommentLogo, NotificationsLogo, UnlikeLogo } from "../../icons/icons";
-import { motion } from "framer-motion";
-import { useMotionValue, useVelocity } from "framer-motion";
 import LikeButton from "./LikeButton";
 import useAuthStore from "../../store/useAuthStore";
 import useAddComment from "../../hooks/useAddComment";
 import useLikeUnlike from "../../hooks/useLikeUnlike";
+import CommentsModal from "./CommentModal";
 
 const PostFooter = (props) => {
   const authUser = useAuthStore((state) => state.user);
@@ -27,6 +25,7 @@ const PostFooter = (props) => {
     likeUnllike();
   };
   const commentRef=useRef(null);
+  const {isOpen,onOpen,onClose}=useDisclosure()
   return (
     <Box mb={5} px={2}>
       <Flex alignItems={"center"} gap={4} mt={4} pt={0}>
@@ -42,7 +41,11 @@ const PostFooter = (props) => {
         <Text pl={0.5}>
           <Text pl={0} as={"span"} fontWeight={"bold"}>{props.creator.userName}</Text>
           <Text as={"span"}>{" "+props.post.caption}</Text>
-          {props.post.comments.length>0 && <Text mt={2} pl={0}color={"gray"}>View all {props.post.comments.length} comments</Text>}
+          {props.post.comments.length>0 && <Text mt={2} pl={0}color={"gray"} cursor={"pointer"} onClick={()=>{
+            onOpen();
+          }}>View all {props.post.comments.length} comments</Text>}
+          {/* {console.log(props.post)} */}
+          {isOpen && <CommentsModal isOpen={isOpen} onClose={onClose} post={props.post}/>}
         </Text>
       )}
 

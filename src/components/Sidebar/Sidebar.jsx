@@ -15,10 +15,10 @@ import { SlLogout } from "react-icons/sl";
 import {motion} from "framer-motion"
 import useLogout from "../../hooks/useLogout";
 import Home from "./Home";
-import Notifications from "./Notifications";
 import Create from "./Create";
 import Profile from "./Profile";
 import Search from "./Search";
+import Suggested from "./Suggested";
 
 const Sidebar = () => {
 
@@ -71,7 +71,7 @@ const Sidebar = () => {
         </Link> */}
         <Home />
         <Search/>
-        <Notifications />
+        <Suggested />
         <Create/>
         <Profile/>
         <Tooltip

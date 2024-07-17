@@ -4,7 +4,7 @@ import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 import useAuthStore from "../store/useAuthStore";
 
-const useGetSuggested = () => {
+const useGetSuggested = (page) => {
   const [isUpdating, setUpdating] = useState(false);
   const showToast = useShowToast();
   const [sUsers, setSUsers] = useState([]);
@@ -18,12 +18,20 @@ const useGetSuggested = () => {
     const getSuggested = async () => {
       setUpdating(true);
       try {
-        const to_check=[];
-        if(sUsers.length!=0)
-            {
-                sUsers.forEach((u)=>to_check.push(u.uid));
-            }
-        const q = query(
+        let q;
+        if(page=="SuggestedModal")
+        {
+          q = query(
+            collection(firestore, "users"),
+            where("uid", "not-in", [
+              authUser.uid,
+              ...authUser.following
+            ])
+          );
+        }
+        else
+        {
+        q = query(
           collection(firestore, "users"),
           where("uid", "not-in", [
             authUser.uid,
@@ -31,6 +39,7 @@ const useGetSuggested = () => {
           ]),
           limit(3)
         );
+        }
         const qSnap = await getDocs(q);
         const users=[];
         qSnap.forEach((doc) => {
@@ -48,7 +57,7 @@ const useGetSuggested = () => {
         getSuggested();
   }, [authUser]);
 
-  return {sUsers,isUpdating,removeUser};
+  return {sUsers,removeUser};
 };
 
 export default useGetSuggested;
