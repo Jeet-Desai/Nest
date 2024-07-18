@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import useShowToast from "./useShowToast";
-import { collection, getDocs, limit, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 import { firestore } from "../firebase/firebase";
 import useAuthStore from "../store/useAuthStore";
 
 const useGetSuggested = (page) => {
-  const [isUpdating, setUpdating] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const showToast = useShowToast();
   const [sUsers, setSUsers] = useState([]);
   const authUser = useAuthStore((state) => state.user);
@@ -16,48 +16,35 @@ const useGetSuggested = (page) => {
 
   useEffect(() => {
     const getSuggested = async () => {
-      setUpdating(true);
+      setLoading(true);
       try {
-        let q;
-        if(page=="SuggestedModal")
-        {
-          q = query(
-            collection(firestore, "users"),
-            where("uid", "not-in", [
-              authUser.uid,
-              ...authUser.following
-            ])
-          );
-        }
-        else
-        {
-        q = query(
-          collection(firestore, "users"),
-          where("uid", "not-in", [
-            authUser.uid,
-            ...authUser.following
-          ]),
-          limit(3)
-        );
-        }
+        const q = query(collection(firestore, "users"));
         const qSnap = await getDocs(q);
-        const users=[];
+        let users = [];
         qSnap.forEach((doc) => {
-          users.push({...doc.data(), id: doc.id });
+          users.push({ ...doc.data()});
         });
-        // setSUsers([...sUsers,users]);
-        setSUsers(users);
+
+        const filteredUsers = users.filter(user => ![authUser.uid, ...authUser.following].includes(user.uid));
+        if (page === "Suggested") {
+          setSUsers(filteredUsers.slice(0, 10));
+        } else {
+          setSUsers(filteredUsers.slice(0, 4));
+        }
+
       } catch (error) {
         showToast("Error", error.message, "error");
       } finally {
-        setUpdating(false);
+        setLoading(false);
       }
     };
-    if(authUser)
-        getSuggested();
-  }, [authUser]);
 
-  return {sUsers,removeUser};
+    if (authUser) {
+      getSuggested();
+    }
+  }, [authUser, page, showToast]);
+
+  return { sUsers, removeUser, isLoading };
 };
 
 export default useGetSuggested;

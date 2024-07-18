@@ -45,7 +45,7 @@ const ProfilePage = () => {
           <ProfileHeaderSkeleton />
         )}
         <Flex direction={"column"} w={"full"} px={{ base: 0, md: 0 }}>
-          <ProfileTabs />
+          {/* <ProfileTabs /> */}
           {!isLoading && (
             <ProfilePosts />
           )}

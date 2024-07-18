@@ -7,7 +7,7 @@ import useGetSuggested from "../../hooks/useGetSuggested";
 
 const SuggestedUsers = () => {
   const year = new Date().getFullYear();
-  const { sUsers, isUpdating,removeUser } = useGetSuggested();
+  const { sUsers,removeUser,isLoading } = useGetSuggested();
   // if (isUpdating) return null;
   return (
     <VStack px={2} gap={4}>

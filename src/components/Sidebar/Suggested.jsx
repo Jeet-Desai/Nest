@@ -1,4 +1,4 @@
-import { Box, Flex, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Tooltip, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Link, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Text, Tooltip, useDisclosure } from "@chakra-ui/react";
 import { FaUsers } from "react-icons/fa";
 import useGetSuggested from "../../hooks/useGetSuggested";
 import SuggestedUser from "../HomePage/SuggestedUser";
@@ -7,9 +7,9 @@ import { useLocation } from "react-router-dom";
 
 const Suggested = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const page="SuggestedModal"
+  const page="Suggested"
   const {posts,isUpdating} = useFetchFeedPosts()
-  const { sUsers,removeUser } = useGetSuggested(page);
+  const { sUsers,removeUser,isLoading } = useGetSuggested(page);
   
   const {pathname}=useLocation()
   const shouldGlow= !isUpdating && posts.length==0 && pathname==="/";
@@ -85,6 +85,7 @@ const Suggested = () => {
               overflowY={"auto"}
               px={6}
             >
+              {!isLoading && sUsers.length==0 && (<Text>No Suggested Users🙁</Text>)}
               {sUsers.map((user) => (
                 <SuggestedUser
                   user={user}
