@@ -30,8 +30,9 @@ const SuggestedUser = ({ user, setUser, removeUser }) => {
       alignItems={"center"}
       justifyContent={"space-between"}
       w={"full"}
+      // border={"2px solid white"}
     >
-      <Flex>
+      <Flex >
       <Link as={RouterLink} to={`${user.userName}`}>
         <Avatar src={user.profilePicURL} size={"md"} />
         </Link>
@@ -51,6 +52,7 @@ const SuggestedUser = ({ user, setUser, removeUser }) => {
         </VStack>
       </Flex>
       {authUser.uid !== user.uid && (
+        // <Flex border={"2px solid"} >
         <Button
           color={"blue.600"}
           _hover={{ color: "white", bg: "black" }}
@@ -61,9 +63,11 @@ const SuggestedUser = ({ user, setUser, removeUser }) => {
           bg={"transparent"}
           onClick={handleFollowUnfollow}
           isLoading={isUpdating}
+          pb={"20px"}
         >
           <Text>{isFollowing ? "Unfollow" : "Follow"}</Text>
         </Button>
+          // </Flex>
       )}
     </Flex>
   );
